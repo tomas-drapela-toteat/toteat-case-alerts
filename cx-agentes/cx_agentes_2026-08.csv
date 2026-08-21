@@ -1,24 +1,25 @@
 ﻿agente;chats_puntuados;chats_1_2;pct_1_2;cx_score_pct;nota_promedio;n1;n2;n3;n4;n5;pct_del_total_1_2;estado
-(sin asignar);20;10;50,0;25,0;2,75;1;9;5;4;1;0,3;fuera de ranking
-Andrés Vanegas;2;1;50,0;50,0;3,00;0;1;0;1;0;0,0;muestra chica
-Javiera Burdiles;550;258;46,9;40,5;3,04;10;248;69;158;65;8,6;crítico
-María Camila Velásquez;593;237;40,0;50,3;3,28;3;234;58;189;109;7,9;crítico
-Jorge Pirela;545;196;36,0;56,7;3,32;3;193;40;242;67;6,5;crítico
-Nicolas Andres Diaz Ramirez;692;246;35,5;57,1;3,40;5;241;51;265;130;8,2;crítico
-Carlos Caro Umbarila;554;184;33,2;54,0;3,33;1;183;71;232;67;6,1;atención
-Jhonatan Valenzuela;757;251;33,2;55,0;3,35;11;240;90;307;109;8,4;atención
-Diego Martin Clavijo;609;194;31,9;57,0;3,39;7;187;68;254;93;6,5;atención
-Verónica López;380;114;30,0;64,5;3,63;3;111;21;133;112;3,8;atención
-Matías Carvacho;691;205;29,7;58,6;3,47;3;202;81;274;131;6,8;atención
-Daniela Ramírez;519;152;29,3;59,3;3,48;3;149;59;214;94;5,1;atención
-Adolfo Camps;643;184;28,6;61,4;3,47;2;182;64;301;94;6,1;atención
-Brandon Villamil;535;135;25,2;66,0;3,57;4;131;47;263;90;4,5;atención
-Lorena Ramos;573;140;24,4;66,5;3,64;1;139;52;255;126;4,7;ok
-Jessica González;528;128;24,2;67,0;3,62;0;128;46;254;100;4,3;ok
-Toteat (bot);326;77;23,6;27,0;3,17;0;77;161;44;44;2,6;fuera de ranking
-Felipe Rincon;187;43;23,0;70,6;3,65;0;43;12;100;32;1,4;ok
-Jaime Medalla;512;117;22,9;66,2;3,59;1;116;56;259;80;3,9;ok
-Luis Arias;557;120;21,5;64,5;3,59;0;120;78;271;88;4,0;ok
+Francisco Ramirez;1;1;100,0;0,0;2,00;0;1;0;0;0;0,0;muestra chica
+Andrés Vanegas;3;2;66,7;33,3;2,67;0;2;0;1;0;0,1;muestra chica
+Javiera Burdiles;588;278;47,3;40,3;3,03;11;267;73;167;70;8,9;crítico
+(sin asignar);25;11;44,0;24,0;2,80;1;10;8;5;1;0,4;fuera de ranking
+María Camila Velásquez;608;240;39,5;50,8;3,29;3;237;59;197;112;7,7;crítico
+Jorge Pirela;583;210;36,0;56,8;3,33;5;205;42;256;75;6,7;crítico
+Nicolas Andres Diaz Ramirez;752;263;35,0;57,3;3,40;5;258;58;294;137;8,4;atención
+Jhonatan Valenzuela;757;251;33,2;55,0;3,35;11;240;90;307;109;8,0;atención
+Carlos Caro Umbarila;604;193;32,0;55,3;3,36;1;192;77;257;77;6,2;atención
+Diego Martin Clavijo;661;205;31,0;58,2;3,42;7;198;71;283;102;6,5;atención
+Verónica López;418;125;29,9;64,1;3,62;3;122;25;147;121;4,0;atención
+Matías Carvacho;691;205;29,7;58,6;3,47;3;202;81;274;131;6,5;atención
+Daniela Ramírez;547;157;28,7;60,1;3,50;3;154;61;225;104;5,0;atención
+Adolfo Camps;682;189;27,7;61,9;3,49;2;187;71;318;104;6,0;atención
+Brandon Villamil;565;142;25,1;65,8;3,57;4;138;51;278;94;4,5;atención
+Lorena Ramos;573;140;24,4;66,5;3,64;1;139;52;255;126;4,5;ok
+Jessica González;528;128;24,2;67,0;3,62;0;128;46;254;100;4,1;ok
+Toteat (bot);336;80;23,8;26,8;3,17;0;80;166;44;46;2,6;fuera de ranking
+Jaime Medalla;570;131;23,0;65,8;3,58;2;129;64;285;90;4,2;ok
+Felipe Rincon;245;56;22,9;69,4;3,65;0;56;19;124;46;1,8;ok
+Luis Arias;602;126;20,9;65,4;3,62;0;126;82;288;106;4,0;ok
 Juan Pablo Melo;5;1;20,0;40,0;3,20;0;1;2;2;0;0,0;muestra chica
 Sofía;18;0;0,0;100,0;5,00;0;0;0;0;18;0,0;ok
 Jeremy Araujo;1;0;0,0;100,0;4,00;0;0;0;1;0;0,0;muestra chica
