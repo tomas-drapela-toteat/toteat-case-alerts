@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Buscador de KAM · Toteat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', sans-serif; background: #F4F4F5; color: #1B1B1B;
+         font-size: 14px; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ── Topbar ── */
+  .topbar { background: #1B1B1B; color: #fff; padding: 0 24px; display: flex; align-items: center;
+            justify-content: space-between; height: 56px; flex-shrink: 0; }
+  .topbar-logo { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
+  .topbar-logo em { color: #FF4B33; font-style: normal; }
+  .topbar-logo span { color: #888; font-weight: 600; font-size: 15px; margin-left: 6px; }
+  .topbar-date { font-size: 12px; color: #888; font-weight: 500; }
+
+  .wrap { max-width: 780px; width: 100%; margin: 0 auto; padding: 40px 24px 48px; flex: 1; }
+
+  /* ── Hero ── */
+  h1 { font-size: 30px; font-weight: 800; letter-spacing: -.8px; margin-bottom: 8px; }
+  h1 em { color: #FF4B33; font-style: normal; }
+  .sub { color: #71717A; font-size: 14px; font-weight: 500; margin-bottom: 26px; line-height: 1.55; }
+
+  /* ── Buscador ── */
+  .searchbox { display: flex; gap: 10px; }
+  .searchbox input { flex: 1; padding: 15px 18px; border: 2px solid #E4E4E7; border-radius: 12px;
+                     font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 600;
+                     background: #fff; letter-spacing: .3px; }
+  .searchbox input::placeholder { font-weight: 500; color: #A1A1AA; letter-spacing: 0; }
+  .searchbox input:focus { outline: none; border-color: #FF4B33;
+                           box-shadow: 0 0 0 4px rgba(255,75,51,.12); }
+  .btn { padding: 15px 26px; border: none; border-radius: 12px; background: #FF4B33; color: #fff;
+         font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
+         transition: background .15s, transform .1s; white-space: nowrap; }
+  .btn:hover { background: #E63E28; }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { background: #D4D4D8; cursor: default; }
+  .hint { font-size: 12px; color: #A1A1AA; margin-top: 10px; font-weight: 500; }
+
+  /* ── Resultados ── */
+  .results { margin-top: 28px; }
+  .rescount { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+              color: #A1A1AA; margin-bottom: 12px; }
+  .card { background: #fff; border: 1px solid #EBEBEB; border-radius: 14px; padding: 20px 22px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.05); margin-bottom: 12px; }
+  .card.baja { background: #FAFAFA; }
+  .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+               margin-bottom: 16px; }
+  .cuenta { font-size: 18px; font-weight: 800; letter-spacing: -.3px; line-height: 1.25; }
+  .cuenta-meta { font-size: 12px; color: #A1A1AA; font-weight: 600; margin-top: 4px; }
+  .cuenta-meta b { color: #71717A; font-weight: 700; }
+
+  .badge { display: inline-block; padding: 4px 11px; border-radius: 20px; font-size: 11px;
+           font-weight: 700; white-space: nowrap; letter-spacing: .02em; }
+  .b-cartera { background: #DCFCE7; color: #15803D; }
+  .b-nuevo   { background: #DBEAFE; color: #1D4ED8; }
+  .b-hiber   { background: #FEF3C7; color: #B45309; }
+  .b-baja    { background: #FEE2E2; color: #991B1B; }
+  .b-otro    { background: #E5E7EB; color: #6B7280; }
+
+  .kam { background: #FFF7ED; border: 1px solid #FFE0D6; border-radius: 11px; padding: 14px 16px;
+         display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .card.baja .kam { background: #F4F4F5; border-color: #E4E4E7; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: #FF4B33; color: #fff;
+            display: flex; align-items: center; justify-content: center; font-weight: 800;
+            font-size: 15px; flex-shrink: 0; letter-spacing: -.5px; }
+  .card.baja .avatar { background: #A1A1AA; }
+  .kam-info { flex: 1; min-width: 150px; }
+  .kam-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em;
+             color: #C2410C; margin-bottom: 2px; }
+  .card.baja .kam-lbl { color: #A1A1AA; }
+  .kam-name { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .kam-mail { font-size: 12px; color: #71717A; font-weight: 600; word-break: break-all; }
+  .kam-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mini { padding: 8px 13px; border: 1.5px solid #E4E4E7; border-radius: 9px; background: #fff;
+          font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700; color: #52525B;
+          cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .mini:hover { border-color: #FF4B33; color: #FF4B33; }
+  .mini.ok { border-color: #16A34A; color: #16A34A; }
+
+  .aviso { margin-top: 12px; font-size: 12px; font-weight: 600; padding: 9px 12px; border-radius: 9px; }
+  .aviso-baja { background: #FEE2E2; color: #991B1B; }
+  .aviso-inact { background: #FEF3C7; color: #B45309; }
+
+  .empty { background: #fff; border: 1px dashed #D4D4D8; border-radius: 14px; padding: 32px 24px;
+           text-align: center; color: #71717A; }
+  .empty b { color: #1B1B1B; display: block; font-size: 15px; margin-bottom: 6px; }
+
+  /* ── Listado de cuentas (cadenas con muchos locales) ── */
+  .acct-wrap { background: #fff; border: 1px solid #EBEBEB; border-radius: 14px; overflow: hidden;
+               box-shadow: 0 1px 3px rgba(0,0,0,.05); margin-top: 14px; }
+  .acct-hd { background: #18181B; color: #E4E4E7; padding: 10px 16px; font-size: 11px;
+             font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+  .acct { display: flex; align-items: center; gap: 12px; padding: 11px 16px;
+          border-bottom: 1px solid #F4F4F5; }
+  .acct:last-child { border-bottom: none; }
+  .acct:hover { background: #FAFAFA; }
+  .acct-n { flex: 1; min-width: 0; }
+  .acct-n b { font-size: 13px; font-weight: 700; display: block; }
+  .acct-n span { font-size: 11px; color: #A1A1AA; font-weight: 600; }
+  .acct-k { font-size: 12px; font-weight: 700; color: #52525B; white-space: nowrap; }
+  .more { padding: 11px 16px; font-size: 12px; color: #A1A1AA; font-weight: 600;
+          background: #FAFAFA; }
+
+  /* ── Gate ── */
+  .gate { max-width: 380px; margin: 90px auto; background: #fff; border: 1px solid #EBEBEB;
+          border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,.06); }
+  .gate h2 { font-size: 19px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 6px; }
+  .gate p { font-size: 13px; color: #71717A; margin-bottom: 18px; font-weight: 500; }
+  .gate input { width: 100%; padding: 13px 15px; border: 2px solid #E4E4E7; border-radius: 11px;
+                font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 600;
+                margin-bottom: 12px; }
+  .gate input:focus { outline: none; border-color: #FF4B33; }
+  .gate .btn { width: 100%; }
+  .err { color: #DC2626; font-size: 12px; font-weight: 700; margin-top: 10px; display: none; }
+
+  footer { padding: 18px 24px 26px; text-align: center; font-size: 11px; color: #A1A1AA;
+           font-weight: 500; }
+  footer a { color: #FF4B33; text-decoration: none; font-weight: 700; }
+  .hide { display: none !important; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 26px 16px 32px; }
+    h1 { font-size: 24px; }
+    .searchbox { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">tot<em>eat</em><span>Buscador de KAM</span></div>
+  <div class="topbar-date">Datos al 04-09-2026 09:00</div>
+</div>
+
+<!-- ── Gate ── -->
+<div id="gate" class="gate">
+  <h2>Acceso</h2>
+  <p>Ingresá la clave que compartimos en el canal para ver el buscador.</p>
+  <input id="pw" type="password" placeholder="Clave" autocomplete="current-password">
+  <button class="btn" id="btnPw">Entrar</button>
+  <div class="err" id="pwErr">Clave incorrecta.</div>
+</div>
+
+<!-- ── App ── -->
+<div class="wrap hide" id="app">
+  <h1>¿Quién es el <em>KAM</em> de este cliente?</h1>
+  <p class="sub">Pegá el RUT, CUIT, NIT, RFC o el nombre del local y te decimos quién lo lleva en Toteat,
+     para que lo etiquetes directo en el canal.</p>
+
+  <div class="searchbox">
+    <input id="q" placeholder="76.874.475-0 · 30-71234567-9 · o el nombre del local" autocomplete="off" spellcheck="false">
+    <button class="btn" id="btnGo">Buscar</button>
+  </div>
+  <div class="hint">Da igual con puntos o sin puntos. También sirve el ID Toteat.</div>
+
+  <div class="results" id="res"></div>
+</div>
+
+<footer>
+  10.100 cuentas · fuente Salesforce · generado el 04-09-2026 09:00 ·
+  <a href="https://toteat.com">toteat.com</a>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+let DB = null;
+
+/* ── util ── */
+const norm = s => (s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+const esc = s => (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+/* ── descifrado ── */
+async function unlock(pw) {
+  const blob = await (await fetch('data.json?v=' + Date.now())).json();
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw),
+    'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: b64(blob.salt), iterations: blob.iter, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  const gz = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(blob.iv) }, key, b64(blob.ct));
+  const ds = new DecompressionStream('gzip');
+  const txt = await new Response(new Blob([gz]).stream().pipeThrough(ds)).text();
+  return JSON.parse(txt);
+}
+
+/* ── búsqueda ── */
+function buscar(raw) {
+  const q = norm(raw);
+  if (q.length < 3) return [];
+  if (DB.idx[q]) return DB.idx[q].slice();  // match exacto de identificador / ID Toteat
+  const hits = [], t = raw.trim().toLowerCase();
+  DB.cuentas.forEach((c, i) => {            // fallback: por nombre o RUT parcial
+    if (hits.length >= 60) return;
+    if (c[0].toLowerCase().includes(t) || norm(c[5]).includes(q)) hits.push(i);
+  });
+  return hits;
+}
+
+const BADGE = { 'Cartera': 'b-cartera', 'Nuevo': 'b-nuevo', 'Hibernación': 'b-hiber', 'Baja': 'b-baja' };
+const iniciales = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+const etapaDe = i => DB.etapas[DB.cuentas[i][2]];
+
+/* Un mismo RUT puede tener decenas de locales (Dunkin, Sodexo, Nan King).
+   La respuesta se agrupa por KAM y las cuentas van en un listado aparte. */
+function porKam(hits) {
+  const vigentes = hits.filter(i => etapaDe(i) !== 'Baja');
+  const base = vigentes.length ? vigentes : hits;
+  const m = new Map();
+  base.forEach(i => {
+    const k = DB.cuentas[i][3];
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(i);
+  });
+  // El que hay que etiquetar es el de las cuentas en Cartera, aunque otro tenga
+  // más locales en estado Nuevo (caso Dunkin: 108 "Nuevo" vs 22 "Cartera").
+  const cartera = g => g.filter(i => etapaDe(i) === 'Cartera').length;
+  return [...m.entries()].sort((a, b) => cartera(b[1]) - cartera(a[1]) || b[1].length - a[1].length);
+}
+
+function bloqueKam(ki, propias, total) {
+  const [kam, mail, activo] = DB.kams[ki];
+  const c = DB.cuentas[propias[0]];
+  const etapa = DB.etapas[c[2]], baja = etapa === 'Baja';
+  const varias = propias.length > 1;
+
+  const titulo = varias ? esc(c[0]) + ' <span style="font-weight:600;color:#A1A1AA">y ' +
+                          (propias.length - 1) + ' más</span>' : esc(c[0]);
+  const meta = [DB.paises[c[1]], esc(c[5]),
+                c[4] ? '<b>ID</b> ' + esc(c[4]) : '',
+                varias ? '<b>' + propias.length + '</b> de ' + total + ' cuentas' :
+                         (c[6] ? c[6] + (c[6] === 1 ? ' sucursal' : ' sucursales') : '')]
+               .filter(Boolean).join(' &nbsp;·&nbsp; ');
+
+  let aviso = '';
+  if (baja) aviso = '<div class="aviso aviso-baja">Cliente dado de baja en Toteat — este es el último KAM que lo atendió.</div>';
+  else if (!activo) aviso = '<div class="aviso aviso-inact">Este KAM ya no está activo en Toteat. Escribinos en el canal y te derivamos.</div>';
+
+  return `<div class="card ${baja ? 'baja' : ''}">
+    <div class="card-head">
+      <div>
+        <div class="cuenta">${titulo}</div>
+        <div class="cuenta-meta">${meta}</div>
+      </div>
+      <span class="badge ${BADGE[etapa] || 'b-otro'}">${esc(etapa)}</span>
+    </div>
+    <div class="kam">
+      <div class="avatar">${esc(iniciales(kam))}</div>
+      <div class="kam-info">
+        <div class="kam-lbl">KAM Toteat</div>
+        <div class="kam-name">${esc(kam)}</div>
+        ${mail ? `<div class="kam-mail">${esc(mail)}</div>` : ''}
+      </div>
+      <div class="kam-acts">
+        <button class="mini" data-copy="@${esc(kam)}">Copiar @${esc(kam.split(' ')[0])}</button>
+        ${mail ? `<button class="mini" data-copy="${esc(mail)}">Copiar mail</button>` : ''}
+      </div>
+    </div>
+    ${aviso}
+  </div>`;
+}
+
+function filaCuenta(i) {
+  const c = DB.cuentas[i], etapa = DB.etapas[c[2]];
+  return `<div class="acct">
+    <div class="acct-n"><b>${esc(c[0])}</b>
+      <span>${DB.paises[c[1]]}${c[4] ? ' · ID ' + esc(c[4]) : ''}${c[6] ? ' · ' + c[6] + ' suc.' : ''}</span></div>
+    <div class="acct-k">${esc(DB.kams[c[3]][0])}</div>
+    <span class="badge ${BADGE[etapa] || 'b-otro'}">${esc(etapa)}</span>
+  </div>`;
+}
+
+const TOPE_FILAS = 15;
+
+function render(raw) {
+  const box = $('#res');
+  if (!raw.trim()) { box.innerHTML = ''; return; }
+  const hits = buscar(raw);
+  if (!hits.length) {
+    box.innerHTML = `<div class="empty"><b>No encontramos ese cliente</b>
+      Puede que no sea cliente de Toteat, o que el identificador esté cargado distinto.
+      Probá con el nombre del local, o preguntanos en el canal.</div>`;
+    return;
+  }
+
+  const grupos = porKam(hits);
+  const todoBaja = hits.every(i => etapaDe(i) === 'Baja');
+  let html = `<div class="rescount">${grupos.length > 1 ? grupos.length + ' KAMs a cargo' :
+                todoBaja ? 'Último KAM' : 'El KAM es'}</div>`;
+  html += grupos.map(([ki, propias]) => bloqueKam(ki, propias, hits.length)).join('');
+
+  if (hits.length > 1) {
+    html += `<div class="acct-wrap">
+      <div class="acct-hd">${hits.length} cuentas encontradas</div>
+      ${hits.slice(0, TOPE_FILAS).map(filaCuenta).join('')}
+      ${hits.length > TOPE_FILAS ?
+        `<div class="more">+ ${hits.length - TOPE_FILAS} cuentas más (buscá por nombre del local para acotar)</div>` : ''}
+    </div>`;
+  }
+  box.innerHTML = html;
+}
+
+/* ── eventos ── */
+$('#res').addEventListener('click', async e => {
+  const b = e.target.closest('[data-copy]');
+  if (!b) return;
+  await navigator.clipboard.writeText(b.dataset.copy);
+  const t = b.textContent; b.textContent = '¡Copiado!'; b.classList.add('ok');
+  setTimeout(() => { b.textContent = t; b.classList.remove('ok'); }, 1400);
+});
+
+let deb;
+$('#q').addEventListener('input', e => { clearTimeout(deb); const v = e.target.value; deb = setTimeout(() => render(v), 180); });
+$('#q').addEventListener('keydown', e => { if (e.key === 'Enter') render(e.target.value); });
+$('#btnGo').addEventListener('click', () => render($('#q').value));
+
+async function entrar(pw, silencioso) {
+  const btn = $('#btnPw');
+  btn.disabled = true; btn.textContent = 'Abriendo…';
+  try {
+    DB = await unlock(pw);
+    localStorage.setItem('kamfinder_pw', pw);
+    $('#gate').classList.add('hide');
+    $('#app').classList.remove('hide');
+    $('#q').focus();
+  } catch (err) {
+    localStorage.removeItem('kamfinder_pw');
+    if (!silencioso) $('#pwErr').style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Entrar';
+  }
+}
+
+$('#btnPw').addEventListener('click', () => entrar($('#pw').value, false));
+$('#pw').addEventListener('keydown', e => { if (e.key === 'Enter') entrar(e.target.value, false); });
+
+const guardada = localStorage.getItem('kamfinder_pw');
+if (guardada) entrar(guardada, true); else $('#pw').focus();
+</script>
+</body>
+</html>
